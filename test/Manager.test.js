@@ -1,3 +1,4 @@
+const Manager = require('../lib/Manager.js');
 // * `name`
 
 // * `id`

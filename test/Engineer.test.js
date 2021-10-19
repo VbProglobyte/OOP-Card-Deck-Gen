@@ -1,3 +1,4 @@
+const Engineer = require('../lib/Engineer.js');
 // * `name`
 
 // * `id`
