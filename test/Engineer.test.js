@@ -1,15 +1,5 @@
 const Engineer = require('../lib/Engineer.js');
-// * `name`
 
-// * `id`
-
-// * `email`
-
-// * `getName()`
-
-// * `getId()`
-
-// * `getEmail()`
 
 // * `github`&mdash;GitHub username
 

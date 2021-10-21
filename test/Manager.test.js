@@ -1,15 +1,6 @@
 const Manager = require('../lib/Manager.js');
-// * `name`
 
-// * `id`
 
-// * `email`
-
-// * `getName()`
-
-// * `getId()`
-
-// * `getEmail()`
 
 // * `officeNumber`
 
