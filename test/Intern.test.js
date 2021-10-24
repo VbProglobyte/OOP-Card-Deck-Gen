@@ -16,15 +16,18 @@ describe ("Intern test", () => {
         })
 
     })
+    
     it("Should return a school for the intern", () => {
         expect(intern.getSchool()).toBe("SMU")
     })
-        
+
+    it("Should return intern for the role", () => {
+        expect(intern.getRole()).toBe("Intern")
+    })
 })
 
 
-// * `school`
+
 
 // * `getSchool()`
 
-// * `getRole()`&mdash;overridden to return `'Intern'`
