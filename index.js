@@ -2,7 +2,7 @@
 const fs = require("fs");
 // NPM Packages
 const inquirer = require('inquirer');
-const jest = require('jest');
+// const jest = require('jest');
 
 // Employee Class section
 const Employee = require("./lib/Employee");
@@ -11,7 +11,7 @@ const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
 // HTML 
-const genHTML = require('./src/genHTML');
+const genHTML = require('./dist/generateHTML');
 // inquirer questions for employees array 
 const employeesList = [];
 
@@ -85,41 +85,63 @@ const internQuestions = [
     },
 ]
 // //////////////////////////////////////////////////////////////////////////////////////
+function init() {
+    console.log('Enter your team')
+    inquirer.prompt(managerQuestions) // initialize with manager questions 
+    .then((answers) => {
+        const newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            employeesList.push(newManager);
+            addEmployee();
+    });
+}
 function addEmployee() {
-    inquirer
-        .prompt([
+    inquirer.prompt([
             {
             type: 'list',
-            message: "Which type of team member would you like to add?",
-            name: 'teamMember',
-            choices: ['Engineer', 'Intern', "I don't want to add any more team members."]
+            message: "What role of employee will you be adding?",
+            name: 'employeeMember',
+            choices: ['Engineer', 'Intern', 'That is everyone!']
             }
         ])
         .then((answer) => {
-            if (answer.teamMember == 'Engineer') {
+            if (answer.employeeMember == 'Engineer') {
                 addEngineer();
             }
-            else if (answer.teamMember === 'Intern') {
+            else if (answer.employeeMember === 'Intern') {
                 addIntern();
             }
             else {
-                console.log('Thanks for entering your team information. Your team roster page has been generated.')
-                generateHTML('./dist/index.html', html(employeesList));
+                console.log('Thank you! Your team card deck has been generated.')
+                generateHTML('./dist/index.html', html(employeesList)); // created empty array for employee list
             }
-        })
-        .catch((error) => {
-            if (error.isTtyError) {
-            // Prompt couldn't be rendered in the current environment
-            } else {
-            // Something else went wrong
-            }
-  });
+        });
+}
+// prompt for specific question group - start with Manager default 
+// ENGINEER 
+function addEngineer() {
+    console.log('Please provide the following data:')
+    inquirer.prompt(engineerQuestions)
+        .then((answers) => {
+            const newEngineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            employeesList.push(newEngineer);
+            addEmployee();
+        });
 }
 
-
+// INTERN
+function addIntern() {
+    console.log('Please provide the following data:')
+    inquirer.prompt(internQuestions)
+        .then((answers) => {
+            const newIntern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            employeesList.push(newIntern);
+            addEmployee();
+        });    
+}
+// generates HTML based on user questions 
 function genHTML(fileName, data) {
     fs.writeFile(fileName, data, (err) =>
-      err ? console.log(err) : console.log('Success!'))
+      err ? console.log(err) : console.log('Success! Card deck is available.'))
   }
-
+// INITIALIZATION ////////////////////////////////////////
 init();

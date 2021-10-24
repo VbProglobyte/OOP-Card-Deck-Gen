@@ -10,6 +10,7 @@ describe ("engineer test", () => {
         it("Should create a new engineer object", () =>{
            
             expect(engineer.name).toEqual("Val");
+            
             expect(engineer.id).toEqual(1234);
             expect(engineer.email).toEqual("val@email.com");
             expect(engineer.gitHub).toEqual("engineer@gitHub.com");
