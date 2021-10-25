@@ -6,12 +6,13 @@ const inquirer = require('inquirer');
 
 // Employee Class section
 const Employee = require("./lib/Employee");
-const Manager = require('./lib/manager');
-const Engineer = require('./lib/engineer');
-const Intern = require('./lib/intern');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
 // HTML 
-const genHTML = require('./dist/generateHTML');
+// const genHTML = require('./dist/generateHTML.js');
+// let genHTML = '';
 // inquirer questions for employees array 
 const employeesList = [];
 
@@ -84,64 +85,80 @@ const internQuestions = [
         name: 'school'
     },
 ]
+
+
+// Welcome prompt +++++++++++++++++++++++
+const welcome =  () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'welcome',
+            message:'\nYou will be asked to input information about your team. Team profiles will be Manager, Engineer, and Intern. Press ENTER to continue. \n',
+        },
+    ])
+    .then(addManager)
+};
+
+// prompt for specific question group - start with Manager default  ------ init()
+
 // //////////////////////////////////////////////////////////////////////////////////////
-function init() {
-    console.log('Enter your team')
+// MANAGER
+const addManager = () => {
+    console.log('Enter your team. Lets start with the Manager.')
     inquirer.prompt(managerQuestions) // initialize with manager questions 
-    .then((answers) => {
-        const newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-            employeesList.push(newManager);
-            addEmployee();
-    });
+        .then((answers) => {
+        const newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);        
+    })
+    .then(addEngineer)
 }
-function addEmployee() {
-    inquirer.prompt([
-            {
-            type: 'list',
-            message: "What role of employee will you be adding?",
-            name: 'employeeMember',
-            choices: ['Engineer', 'Intern', 'That is everyone!']
-            }
-        ])
-        .then((answer) => {
-            if (answer.employeeMember == 'Engineer') {
-                addEngineer();
-            }
-            else if (answer.employeeMember === 'Intern') {
-                addIntern();
-            }
-            else {
-                console.log('Thank you! Your team card deck has been generated.')
-                generateHTML('./dist/index.html', html(employeesList)); // created empty array for employee list
-            }
-        });
-}
-// prompt for specific question group - start with Manager default 
+
+
 // ENGINEER 
-function addEngineer() {
-    console.log('Please provide the following data:')
+const addEngineer = () => {
+    console.log("Now lets enter in the Engineer's data.")
     inquirer.prompt(engineerQuestions)
         .then((answers) => {
             const newEngineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            employeesList.push(newEngineer);
-            addEmployee();
-        });
+        })
+        .then(addIntern)
 }
 
 // INTERN
-function addIntern() {
-    console.log('Please provide the following data:')
+const addIntern = () => {
+    console.log("Now lets enter in the intern's data.")
     inquirer.prompt(internQuestions)
         .then((answers) => {
             const newIntern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            employeesList.push(newIntern);
-            addEmployee();
-        });    
-}
+            // generatehtml(newIntern);
+            // employeesList.push(newIntern);
+            // addEmployee(intern);
+            // if (answers.role === "Engineer"){
+            //     engineerQuestions();
+            // }
+            // else if (answers.role === "Intern"){
+            //     internQuestions();
+            // }
+            // else HTML();         
+        })
+        // .then(generateHTML)
+}    
+
+
+
+
 // generates HTML based on user questions 
-function genHTML(fileName, data) {
-    fs.writeFile(fileName, data, (err) =>
-      err ? console.log(err) : console.log('Success! Card deck is available.'))
-  }
-// INITIALIZATION ////////////////////////////////////////
+// function HTML() {
+// inquirer.prompt(managerQuestions, engineerQuestions, internQuestions)
+//     .then(answers => {   
+//     fs.writeFile('./dist/generateHTML.html', HTML(answers), (err) =>
+//       err ? console.log(err) : console.log('Success! Card deck is available.'))
+//   }
+const genHTML = (employeeList) => {
+    fs.writeFile('./dist/generateHTML.html', generate(employeeList), function(err, answers) {
+        (err) ? console.log('error', err): console.log(`\r\nSuccessfully wrote MyTeam.html to your dist folder.`.underline.green);
+        }
+    );
+};
+// INITIALIZATION //////////////////////////////////////// with manager questions 
+const init = () => welcome()
 init();
