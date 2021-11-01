@@ -11,8 +11,8 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 // HTML 
-// const genHTML = require('./dist/generateHTML.js');
-// let genHTML = '';
+// let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\generateHTML.js');
+let genHTML = '';
 // inquirer questions for employees array 
 const employeesList = [];
 
@@ -141,23 +141,23 @@ const addIntern = () => {
             // else HTML();         
         })
         // .then(generateHTML)
-}    
+    
 
-
+.then(genHTML)
 
 
 // generates HTML based on user questions 
-// function HTML() {
-// inquirer.prompt(managerQuestions, engineerQuestions, internQuestions)
-//     .then(answers => {   
-//     fs.writeFile('./dist/generateHTML.html', HTML(answers), (err) =>
-//       err ? console.log(err) : console.log('Success! Card deck is available.'))
-//   }
-const genHTML = (employeeList) => {
-    fs.writeFile('./dist/generateHTML.html', generate(employeeList), function(err, answers) {
-        (err) ? console.log('error', err): console.log(`\r\nSuccessfully wrote MyTeam.html to your dist folder.`.underline.green);
-        }
-    );
+let HTML = () => {
+inquirer.prompt(managerQuestions, engineerQuestions, internQuestions)
+    .then(employeesList => {   
+    fs.writeFile('./dist/generateHTML.html', HTML(employeesList), (err) =>
+      err ? console.log(err) : console.log('Success! Card deck is available.'))
+})}
+
+    // fs.writeFile('./dist/generateHTML.html', genHTML(employeesList), function(err) {
+    //     (err) ? console.log('error', err): console.log(`\r\nSuccessfully wrote MyTeam.html to your dist folder.`.underline.green);
+    //     }
+    // );
 };
 // INITIALIZATION //////////////////////////////////////// with manager questions 
 const init = () => welcome()

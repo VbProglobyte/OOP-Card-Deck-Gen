@@ -1,5 +1,5 @@
 const fs = require('fs');
-const index = require('./index');
+const index = require('C:\\OOP-Card-Deck-Gen\\index.js');
 
 // Generate HTML for MyTeam
 const generate = (employeeList) => {
@@ -7,29 +7,29 @@ const generate = (employeeList) => {
     function newManagers(employee) {
         for (i = 0; i < employee.length; i++) {
             if (employee[i].role === "Manager") {
-                managerCardsHTML.push(employee[i].managerCard);
+                manager.push(employee[i].managerCard);
             }
         }
     }
     function newEngineers(employee) {
         for (i = 0; i < employee.length; i++) {
             if (employee[i].role === "Engineer") {
-                engineerCardsHTML.push(employee[i].engineerCard);
+                engineer.push(employee[i].engineerCard);
             }
         }
     }
     function newInterns(employee) {
         for (i = 0; i < employee.length; i++) {
             if (employee[i].role === "Intern") {
-                internCardsHTML.push(employee[i].internCard);
+                intern.push(employee[i].internCard);
             }
         }
     }
 
     // Arrays to Hold HTML for Each Employee Card by Role
-    let managerCardsHTML = [];
-    let engineerCardsHTML = [];
-    let internCardsHTML = [];
+    let manager = [];
+    let engineer = [];
+    let intern = [];
 
     // Generate Arrays of Employee Cards
     newManagers(employeeList);
@@ -64,19 +64,19 @@ const generate = (employeeList) => {
             <main>
                 <section class='container'>
                     <div class='row'>
-                        ${managerCardsHTML.join(" ")}
+                        ${manager.join(" ")}
                     </div>
                 </section>
                 <hr class='mt-1 mb-4'/>
                 <section class='container'>
                     <div class='row'>
-                        ${engineerCardsHTML.join(" ")}
+                        ${engineer.join(" ")}
                     </div>
                 </section>
                 <hr class='mt-1 mb-4'/>
                 <section class='container'>
                     <div class='row'>
-                        ${internCardsHTML.join(" ")}
+                        ${intern.join(" ")}
                     </div>
                 </section>
             </main>
@@ -84,11 +84,7 @@ const generate = (employeeList) => {
     </html>`
 }
 
-const genHTML = (employeeList) => {
-    fs.writeFile('./dist/generateHTML.html', generate(employeeList), function(err, answers) {
-        (err) ? console.log('error', err): console.log(`\nSuccess!`.underline.green);
-        }
-    );
-};
 
-module.exports = generateHTML;
+
+
+module.exports = 'C:\OOP-Card-Deck-Gen\dist\generateHTML.js';
