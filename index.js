@@ -110,8 +110,8 @@ const addManager = () => {
         .then((answers) => {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
             employeesQA.push(manager);
-            console.log(employeesQA);
-            addEmployee();
+            // console.log(employeesQA);
+           
         })
         .then(addEngineer)
 };
@@ -124,8 +124,8 @@ const addEngineer = () => {
         .then((answers) => {
             const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
             employeesQA.push(engineer);
-            console.log(employeesQA);
-            addEmployee();
+            // console.log(employeesQA);
+           
         })
         .then(addIntern)
 
@@ -138,20 +138,20 @@ const addIntern = () => {
         .then((answers) => {
             const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
             employeesQA.push(intern);
-            console.log(employeesQA); //employee array is working 
-            addEmployee();
+            // console.log(employeesQA); //employee array is working 
+           
         })
        
 };
 
 // generates HTML based on user questions 
-HTML = (answers) => {
+HTML = (answers, employeesQA) => {
     fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
         err ? console.log(err) : console.log('Successfully created a Card Deck!')
     });
 };
 
 // INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
-const init = () => welcome()
+const init = () => welcome() 
 // init();
 init(HTML);

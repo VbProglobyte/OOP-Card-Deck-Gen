@@ -1,4 +1,7 @@
 
+let manager = [];
+let engineer = [];
+let intern = [];
 // const internName = intern.getName();
 // const internRole = intern.getRole();
 // const internId = intern.getID();
@@ -14,13 +17,20 @@
 // const engineerId = engineer.getID();
 // const engineerEmail = engineer.getEmail();
 // const engineerGitHub = engineer.getGitHub();
-
+const inquirer = require ("inquirer");
+const fs = require("fs");
 const index = require('../index');
 const employeesQA = [];
-// Generates template literal = manager
-function generateHTML(employeesQA) {
+const Manager = require("../lib/Manager");
+const Engineer = require("../lib/Engineer");
+const Intern = require("../lib/Intern");
 
-    return `<!doctype html>
+
+// Generates template literal = manager
+
+function generateHTML(manager, engineer, intern) {
+    console.log(manager, engineer, intern);
+return `<!doctype html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">      
@@ -43,34 +53,34 @@ function generateHTML(employeesQA) {
         </header>
         <main>
             <section class='container'>
-            <h2 class="card-header">${answers.manager.name}</h2>
-            <h3 class="card-header">${answers.manager.role}</h3>
+            <h2 class="card-header">${Manager.name}</h2>
+            <h3 class="card-header">${Manager.role}</h3>
         <div class="card-body">
-        <h4 class="card-title">ID: ${answers.manager.id}</h4>
-        <h4 class="card-title">Email: <a href="mailto:${answers.manager.email}"></a></h4>
-        <h4 class="card-title">Office Number: ${answers.manager.officeNumber}</h4>
+        <h4 class="card-title">ID: ${Manager.id}</h4>
+        <h4 class="card-title">Email: <a href="mailto:${Manager.email}"></a></h4>
+        <h4 class="card-title">Office Number: ${Manager.officeNumber}</h4>
         </div>
             </section>
             
     
         <div class="card text-white bg-dark mb-3 engineer" style="max-width: 18rem;">
-            <h2 class="card-header">${answers.engineer.name}</h2>
-                <h3 class="card-header">${answers.engineer.role}</h3>
+            <h2 class="card-header">${Engineer.name}</h2>
+                <h3 class="card-header">${Engineer.role}</h3>
             <div class="card-body">
-            <h4 class="card-title">ID: ${answers.engineer.id}</h4>      
-            <h4 class="card-title">Email: <a href="mailto:${answers.engineer.email}">${answers.engineer.email}</a></h4>
-            <h4 class="card-title">GitHub: <a href="http://github.com/${answers.engineer.gitHub}" target="_blank">${answers.engineer.gitHub}</a></h4>
+            <h4 class="card-title">ID: ${Engineer.id}</h4>      
+            <h4 class="card-title">Email: <a href="mailto:${Engineer.email}">${Engineer.email}</a></h4>
+            <h4 class="card-title">GitHub: <a href="http://github.com/${Engineer.gitHub}" target="_blank">${Engineer.gitHub}</a></h4>
             </div>
         </div>
           
    
         <div class="card text-white bg-dark mb-3 intern" style="max-width: 18rem;">
-            <h2 class="card-header">${answers.intern.name}</h2>
-                <h3 class="card-header">${answers.intern.role}</h3>
+            <h2 class="card-header">${Intern.name}</h2>
+                <h3 class="card-header">${Intern.role}</h3>
             <div class="card-body">
-            <h4 class="card-title">ID: ${answers.intern.id}</h4>
-            <h4 class="card-title">Email: <a href="mailto:${answers.intern.email}">${answers.intern.email}</a></h4>
-            <h4 class="card-title">School: ${answers.intern.school}</h4>
+            <h4 class="card-title">ID: ${Intern.id}</h4>
+            <h4 class="card-title">Email: <a href="mailto:${Intern.email}">${Intern.email}</a></h4>
+            <h4 class="card-title">School: ${Intern.school}</h4>
             </div>
         </div>
        
@@ -78,13 +88,15 @@ function generateHTML(employeesQA) {
  
 </body>
 </html>    
-    `;
+    `
+}
 
-
-};
-HTML = (answers) => {
-    fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
-        err ? console.log(err) : console.log('Successfully created a Card Deck!')
-    });
-};
+// let managerArr = data.filter(Employee => Employee.getRole() === "Manager");
+// let engineerArr = data.filter(Employee => Employee.getRole() === "Engineer");
+// let internArr = data.filter(Employee => Employee.getRole() === "Intern");
+// HTML = (answers) => {
+//     fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
+//         err ? console.log(err) : console.log('Successfully created a Card Deck!')
+//     });
+// };
 module.exports = generateHTML;
