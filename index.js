@@ -5,16 +5,17 @@ const inquirer = require('inquirer');
 // const jest = require('jest');
 
 // Employee Class section
-// const Employee = require("./lib/Employee");
+const Employee = require("./lib/Employee");
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 // HTML 
-let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\index.html');
-// let genHTML = '';
+// let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\index.html');
+const generateHTML = require('./dist/generateHTML.js');
+// let employeesQA = '';
 // inquirer questions for employees array 
-const employeesList = [];
+const employeesQA = [];
 
 // Questions for each employee type (Engineer, Manager, Intern) //////////////////////////////////////////////////////////////
 const managerQuestions = [
@@ -107,10 +108,13 @@ const addManager = () => {
     console.log('Enter your team. Lets start with the Manager.')
     inquirer.prompt(managerQuestions) // initialize with manager questions 
         .then((answers) => {
-            const newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            employeesQA.push(manager);
+            console.log(employeesQA);
+            addEmployee();
         })
         .then(addEngineer)
-}
+};
 
 
 // ENGINEER 
@@ -118,42 +122,36 @@ const addEngineer = () => {
     console.log("Now lets enter in the Engineer's data.")
     inquirer.prompt(engineerQuestions)
         .then((answers) => {
-            const newEngineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            employeesQA.push(engineer);
+            console.log(employeesQA);
+            addEmployee();
         })
         .then(addIntern)
-}
+
+};
 
 // INTERN
 const addIntern = () => {
     console.log("Now lets enter in the intern's data.")
     inquirer.prompt(internQuestions)
         .then((answers) => {
-            const newIntern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            
+            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            employeesQA.push(intern);
+            console.log(employeesQA); //employee array is working 
+            addEmployee();
         })
-    
+       
 };
 
 // generates HTML based on user questions 
-genHTML = () => {
-    // inquirer.prompt(managerQuestions, engineerQuestions, internQuestions)
-    // genHTML(employeesList)    
-    // .then(newManager, newEngineer, newIntern) => {   
-    fs.writeFile(genHTML(newManager, newEngineer, newIntern), (err) => {
-        
-        if (err) {
-            return console.log(err);
-        }
-       
-        console.log('Success! Card deck is available.')
-    })
+HTML = (answers) => {
+    fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
+        err ? console.log(err) : console.log('Successfully created a Card Deck!')
+    });
 };
 
-// fs.writeFile('./dist/generateHTML.html', genHTML(employeesList), function(err) {
-//     (err) ? console.log('error', err): console.log(`\r\nSuccessfully wrote MyTeam.html to your dist folder.`.underline.green);
-//     }
-// );
-
-// INITIALIZATION //////////////////////////////////////// with manager questions 
+// INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
 const init = () => welcome()
-init();
+// init();
+init(HTML);
