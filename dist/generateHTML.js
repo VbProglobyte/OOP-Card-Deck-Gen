@@ -1,7 +1,3 @@
-
-let manager = [];
-let engineer = [];
-let intern = [];
 // const internName = intern.getName();
 // const internRole = intern.getRole();
 // const internId = intern.getID();
@@ -17,7 +13,7 @@ let intern = [];
 // const engineerId = engineer.getID();
 // const engineerEmail = engineer.getEmail();
 // const engineerGitHub = engineer.getGitHub();
-const inquirer = require ("inquirer");
+const inquirer = require("inquirer");
 const fs = require("fs");
 const index = require('../index');
 const employeesQA = [];
@@ -27,76 +23,97 @@ const Intern = require("../lib/Intern");
 
 
 // Generates template literal = manager
-
-function generateHTML(manager, engineer, intern) {
-    console.log(manager, engineer, intern);
-return `<!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">      
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!--Stylesheets-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?&family=Poppins:wght@200;300;400;500&family=Roboto:wght@300;400;500;700&display=swap" >
-        <link rel="stylesheet" href="style.css">
-        <title>OOP Card Deck</title>
-    </head>
-    <body>
-        <header class="jumbotron">
-            <div class="container">
-                <div class="row align-self-center">
-                    <h1 class="text-center">OOP Card Deck</h1>
+const managerCard = (manager) => {
+    return `<div class="m-2 card">
+                <div class="card-header bg-success text-white">
+                    <h2>${manager.getName()}</h2>
+                    <h2>${manager.getRole()}</h2>
                 </div>
-            </div>
-        </header>
-        <main>
-            <section class='container'>
-            <h2 class="card-header">${Manager.name}</h2>
-            <h3 class="card-header">${Manager.role}</h3>
-        <div class="card-body">
-        <h4 class="card-title">ID: ${Manager.id}</h4>
-        <h4 class="card-title">Email: <a href="mailto:${Manager.email}"></a></h4>
-        <h4 class="card-title">Office Number: ${Manager.officeNumber}</h4>
-        </div>
-            </section>
-            
-    
-        <div class="card text-white bg-dark mb-3 engineer" style="max-width: 18rem;">
-            <h2 class="card-header">${Engineer.name}</h2>
-                <h3 class="card-header">${Engineer.role}</h3>
-            <div class="card-body">
-            <h4 class="card-title">ID: ${Engineer.id}</h4>      
-            <h4 class="card-title">Email: <a href="mailto:${Engineer.email}">${Engineer.email}</a></h4>
-            <h4 class="card-title">GitHub: <a href="http://github.com/${Engineer.gitHub}" target="_blank">${Engineer.gitHub}</a></h4>
-            </div>
-        </div>
-          
-   
-        <div class="card text-white bg-dark mb-3 intern" style="max-width: 18rem;">
-            <h2 class="card-header">${Intern.name}</h2>
-                <h3 class="card-header">${Intern.role}</h3>
-            <div class="card-body">
-            <h4 class="card-title">ID: ${Intern.id}</h4>
-            <h4 class="card-title">Email: <a href="mailto:${Intern.email}">${Intern.email}</a></h4>
-            <h4 class="card-title">School: ${Intern.school}</h4>
-            </div>
-        </div>
-       
-    </main>
- 
-</body>
-</html>    
-    `
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: ${manager.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
+                    <li class="list-group-item">Office Number: ${manager.getOfficeNum()}</li>
+                </ul>
+            </div>`
 }
 
-// let managerArr = data.filter(Employee => Employee.getRole() === "Manager");
-// let engineerArr = data.filter(Employee => Employee.getRole() === "Engineer");
-// let internArr = data.filter(Employee => Employee.getRole() === "Intern");
-// HTML = (answers) => {
-//     fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
-//         err ? console.log(err) : console.log('Successfully created a Card Deck!')
-//     });
-// };
+const engineerCard = (engineer) => {
+    return `<div class="m-2 card">
+                <div class="card-header bg-primary text-white">
+                    <h2>${engineer.getName()}</h2>
+                    <h2>${engineer.getRole()}</h2>
+                </div>
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: ${engineer.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+                    <li class="list-group-item">GitHub: <a href="https://www.github.com/${engineer.getGit()}" target="_blank">${engineer.getGit()}</a></li>
+                </ul>
+            </div>`
+}
+const internCard = (intern) => {
+    return `<div class="m-2 card">
+                <div class="card-header bg-secondary text-white">
+                    <h2>${intern.getName()}</h2>
+                    <h2>${intern.getRole()}</h2>
+                </div>
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: 1</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+                    <li class="list-group-item">School: ${intern.getSchool()}</li>
+                </ul>
+            </div>`
+}
+//loop through employee data
+function generateHTML(data) {
+    let { manager, engineer, intern } = data;
+    let html = "";
+    // if's so you can't enter in an empty string
+    if (data.length > 0) {
+        manager.forEach(data => {
+            html += managerCard(data);
+        })
+    }
+    if (data.length > 0) {
+        engineer.forEach(data => {
+            html += engineerCard(data);
+        })
+    }
+    if (data.length > 0) {
+        intern.forEach(data => {
+            html += internCard(data);
+        })
+    }
+
+    let generatedHtml = `<!doctype html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+            <link rel="stylesheet" href="style.css">
+            <title>OOP Card Deck</title>
+    </head>
+    
+    <body>
+        <header class="bg-primary bg-gradient text-center">
+            <h1>OOP Card Deck</h1>
+        </header>
+    
+        <body>
+            <div class="d-flex">
+                ${html}
+            </div>
+        </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+    </body>
+    </html>`
+
+    return generatedHtml;
+}
+
+
 module.exports = generateHTML;

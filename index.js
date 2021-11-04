@@ -5,7 +5,7 @@ const inquirer = require('inquirer');
 // const jest = require('jest');
 
 // Employee Class section
-const Employee = require("./lib/Employee");
+// const Employee = require("./lib/Employee");
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -16,6 +16,9 @@ const generateHTML = require('./dist/generateHTML.js');
 // let employeesQA = '';
 // inquirer questions for employees array 
 const employeesQA = [];
+let managerArr = [];
+let engineerArr = [];
+let internArr = [];
 
 // Questions for each employee type (Engineer, Manager, Intern) //////////////////////////////////////////////////////////////
 const managerQuestions = [
@@ -109,7 +112,7 @@ const addManager = () => {
     inquirer.prompt(managerQuestions) // initialize with manager questions 
         .then((answers) => {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-            employeesQA.push(manager);
+            managerArr.push(manager);
             // console.log(employeesQA);
            
         })
@@ -123,7 +126,7 @@ const addEngineer = () => {
     inquirer.prompt(engineerQuestions)
         .then((answers) => {
             const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            employeesQA.push(engineer);
+            engineerArr.push(engineer);
             // console.log(employeesQA);
            
         })
@@ -137,21 +140,23 @@ const addIntern = () => {
     inquirer.prompt(internQuestions)
         .then((answers) => {
             const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            employeesQA.push(intern);
+            internArr.push(intern);
             // console.log(employeesQA); //employee array is working 
            
         })
-       
+//   .then(generateHTML);     
 };
 
 // generates HTML based on user questions 
-HTML = (answers, employeesQA) => {
-    fs.writeFile(answers, './dist/generateHTML.html', generateHTML(employeesQA), (err) => {
+async function HTML(answers) {
+    await welcome();
+    fs.writeFileSync(answers, './dist/generateHTML.html', generateHTML(managerArr, engineerArr, internArr), (err) => {
         err ? console.log(err) : console.log('Successfully created a Card Deck!')
     });
 };
 
 // INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
-const init = () => welcome() 
-// init();
-init(HTML);
+const init = () => { HTML()
+    .catch((err) => console.error(err));
+};
+init();
