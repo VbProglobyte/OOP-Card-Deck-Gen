@@ -12,7 +12,7 @@ const Intern = require('./lib/Intern');
 
 // HTML 
 // let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\index.html');
-const generateHTML = require('./dist/generateHTML.js');
+// const generateHTML = require('./dist/generateHTML.js');
 // let employeesQA = '';
 // inquirer questions for employees array 
 const employeesQA = [];
@@ -146,17 +146,101 @@ const addIntern = () => {
         })
 //   .then(generateHTML);     
 };
+// let { manager, engineer, intern } = data;
+    let generateHTML = "";
+// function generatedHtml(answers) {}
+// Generates template literal = manager
+const managerCard = (manager) => {
+    return `<div class="m-2 card">
+                <div class="card-header bg-success text-white">
+                    <h2>${manager.getName()}</h2>
+                    <h2>${manager.getRole()}</h2>
+                </div>
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: ${manager.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
+                    <li class="list-group-item">Office Number: ${manager.getOfficeNum()}</li>
+                </ul>
+            </div>`
+            generateHTML += managerCard;
+            html += managerCard(data);
+}
+
+const engineerCard = (engineer) => {
+    return `<div class="m-2 card">
+                <div class="card-header bg-primary text-white">
+                    <h2>${engineer.getName()}</h2>
+                    <h2>${engineer.getRole()}</h2>
+                </div>
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: ${engineer.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+                    <li class="list-group-item">GitHub: <a href="https://www.github.com/${engineer.getGitHub()}" target="_blank">${engineer.getGitHub()}</a></li>
+                </ul>
+            </div>`
+            generateHTML += engineerCard;
+}
+const internCard = 
+     `<div class="m-2 card">
+                <div class="card-header bg-secondary text-white">
+                    <h2>${intern.getName()}</h2>
+                    <h2>${intern.getRole()}</h2>
+                </div>
+                <ul class="listr-group list-group-flush">
+                    <li class="list-group-item">ID: 1</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+                    <li class="list-group-item">School: ${intern.getSchool()}</li>
+                </ul>
+            </div>
+            </body>
+            </html>`
+            generateHTML += internCard;
+
+
+    let introHtml = `<!doctype html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+            <link rel="stylesheet" href="style.css">
+            <title>OOP Card Deck</title>
+    </head>
+    
+    <body>
+        <header class="bg-primary bg-gradient text-center">
+            <h1>OOP Card Deck</h1>
+        </header>
+    
+        
+            <div class="d-flex">
+               
+            </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+   `
+
+ generateHTML += introHtml += managerCard += engineerCard += internCard;
+
+
 
 // generates HTML based on user questions 
-async function HTML(answers) {
-    await welcome();
-    fs.writeFileSync(answers, './dist/generateHTML.html', generateHTML(managerArr, engineerArr, internArr), (err) => {
+
+    //  welcome();
+    // const joinedHTML = generateHTML.join('');
+    // const HTML = generateHTML(joinedHTML);
+    fs.writeFile('./dist/generateHTML.html', generateHTML, (err) => {
         err ? console.log(err) : console.log('Successfully created a Card Deck!')
     });
-};
+    // return generateHTML;
+
 
 // INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
-const init = () => { HTML()
+const init = () => { welcome()
     .catch((err) => console.error(err));
 };
 init();
