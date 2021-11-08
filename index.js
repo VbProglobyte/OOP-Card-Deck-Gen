@@ -5,17 +5,18 @@ const inquirer = require('inquirer');
 // const jest = require('jest');
 
 // Employee Class section
-// const Employee = require("./lib/Employee");
+const Employee = require("./lib/Employee");
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 // HTML 
+let generateHTML = "";
 // let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\index.html');
 // const generateHTML = require('./dist/generateHTML.js');
 // let employeesQA = '';
 // inquirer questions for employees array 
-const employeesQA = [];
+// const employeesQA = [];
 let managerArr = [];
 let engineerArr = [];
 let internArr = [];
@@ -114,7 +115,7 @@ const addManager = () => {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
             managerArr.push(manager);
             // console.log(employeesQA);
-           
+
         })
         .then(addEngineer)
 };
@@ -128,7 +129,7 @@ const addEngineer = () => {
             const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
             engineerArr.push(engineer);
             // console.log(employeesQA);
-           
+
         })
         .then(addIntern)
 
@@ -142,12 +143,12 @@ const addIntern = () => {
             const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
             internArr.push(intern);
             // console.log(employeesQA); //employee array is working 
-           
+
         })
-//   .then(generateHTML);     
+        .then(generateHTML);
 };
 // let { manager, engineer, intern } = data;
-    let generateHTML = "";
+
 // function generatedHtml(answers) {}
 // Generates template literal = manager
 const managerCard = (manager) => {
@@ -162,8 +163,6 @@ const managerCard = (manager) => {
                     <li class="list-group-item">Office Number: ${manager.getOfficeNum()}</li>
                 </ul>
             </div>`
-            generateHTML += managerCard;
-            html += managerCard(data);
 }
 
 const engineerCard = (engineer) => {
@@ -178,10 +177,9 @@ const engineerCard = (engineer) => {
                     <li class="list-group-item">GitHub: <a href="https://www.github.com/${engineer.getGitHub()}" target="_blank">${engineer.getGitHub()}</a></li>
                 </ul>
             </div>`
-            generateHTML += engineerCard;
 }
-const internCard = 
-     `<div class="m-2 card">
+const internCard = (intern) => {
+    return `<div class="m-2 card">
                 <div class="card-header bg-secondary text-white">
                     <h2>${intern.getName()}</h2>
                     <h2>${intern.getRole()}</h2>
@@ -194,10 +192,9 @@ const internCard =
             </div>
             </body>
             </html>`
-            generateHTML += internCard;
+}
 
-
-    let introHtml = `<!doctype html>
+let introHtml = `<!doctype html>
     <html lang="en">
     
     <head>
@@ -216,7 +213,13 @@ const internCard =
     
         
             <div class="d-flex">
-               
+               ${managerCard}
+            </div>
+            <div class="d-flex">
+               ${engineerCard}
+            </div>
+            <div class="d-flex">
+               ${internCard}
             </div>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
@@ -224,23 +227,24 @@ const internCard =
             crossorigin="anonymous"></script>
    `
 
- generateHTML += introHtml += managerCard += engineerCard += internCard;
+generateHTML += introHtml;
 
 
 
 // generates HTML based on user questions 
 
-    //  welcome();
-    // const joinedHTML = generateHTML.join('');
-    // const HTML = generateHTML(joinedHTML);
-    fs.writeFile('./dist/generateHTML.html', generateHTML, (err) => {
-        err ? console.log(err) : console.log('Successfully created a Card Deck!')
-    });
-    // return generateHTML;
+//  welcome();
+// const joinedHTML = generateHTML.join('');
+// const HTML = generateHTML(joinedHTML);
+fs.writeFile('./dist/generateHTML.html', generateHTML, (err) => {
+    err ? console.log(err) : console.log('Successfully created a Card Deck!')
+});
+// return generateHTML;
 
 
 // INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
-const init = () => { welcome()
+const init = () => {
+    welcome()
     .catch((err) => console.error(err));
 };
 init();

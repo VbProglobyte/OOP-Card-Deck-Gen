@@ -68,23 +68,18 @@ function generateHTML(data) {
     let { manager, engineer, intern } = data;
     let html = "";
     // if's so you can't enter in an empty string
-    if (data.length > 0) {
-        manager.forEach(data => {
-            html += managerCard(data);
-        })
-    }
-    if (data.length > 0) {
-        engineer.forEach(data => {
-            html += engineerCard(data);
-        })
-    }
-    if (data.length > 0) {
-        intern.forEach(data => {
-            html += internCard(data);
-        })
+
+    html += managerCard(data);
+
+
+    html += engineerCard(data);
+
+
+    html += internCard(data);
+
     }
 
-    let generatedHtml = `<!doctype html>
+let generatedHtml = `<!doctype html>
     <html lang="en">
     
     <head>
@@ -112,8 +107,8 @@ function generateHTML(data) {
     </body>
     </html>`
 
-    return generatedHtml;
-}
+return generatedHtml;
+
 
 
 module.exports = generateHTML;
