@@ -9,14 +9,21 @@ const Employee = require("./lib/Employee");
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+// renders
+let team = [];
+let teamArr = [];
+let finalHtml = "";
 
-// HTML 
-let generateHTML = "";
-// let genHTML = require('C:\\OOP-Card-Deck-Gen\\dist\\index.html');
-// const generateHTML = require('./dist/generateHTML.js');
-// let employeesQA = '';
-// inquirer questions for employees array 
-// const employeesQA = [];
+let managerAnswers = {
+
+}
+let engineerAnswers = {
+
+}
+let internAnswers = {
+
+}
+let render = "";
 let managerArr = [];
 let engineerArr = [];
 let internArr = [];
@@ -93,116 +100,73 @@ const internQuestions = [
 
 
 // Welcome prompt +++++++++++++++++++++++
-const welcome = () => {
-    return inquirer.prompt([
+const welcome = async () => {
+    return await inquirer.prompt([
         {
             type: 'input',
             name: 'welcome',
             message: '\nYou will be asked to input information about your team. Team profiles will be Manager, Engineer, and Intern. Press ENTER to continue. \n',
         },
     ])
-        .then(addManager)
+    // .then(addManager)
 };
 
-// prompt for specific question group - start with Manager default  ------ init()
-
-// //////////////////////////////////////////////////////////////////////////////////////
-// MANAGER
-const addManager = () => {
-    console.log('Enter your team. Lets start with the Manager.')
-    inquirer.prompt(managerQuestions) // initialize with manager questions 
-        .then((answers) => {
-            const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-            managerArr.push(manager);
-            // console.log(employeesQA);
-
-        })
-        .then(addEngineer)
-};
-
-
-// ENGINEER 
-const addEngineer = () => {
-    console.log("Now lets enter in the Engineer's data.")
-    inquirer.prompt(engineerQuestions)
-        .then((answers) => {
-            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            engineerArr.push(engineer);
-            // console.log(employeesQA);
-
-        })
-        .then(addIntern)
-
-};
-
-// INTERN
-const addIntern = () => {
-    console.log("Now lets enter in the intern's data.")
-    inquirer.prompt(internQuestions)
-        .then((answers) => {
-            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            internArr.push(intern);
-            // console.log(employeesQA); //employee array is working 
-
-        })
-        .then(generateHTML);
-};
-// let { manager, engineer, intern } = data;
-
-// function generatedHtml(answers) {}
-// Generates template literal = manager
-const managerCard = (manager) => {
+const managerCard = (MGR) => {
     return `<div class="m-2 card">
                 <div class="card-header bg-success text-white">
-                    <h2>${manager.getName()}</h2>
-                    <h2>${manager.getRole()}</h2>
+                    <h2>${MGR.getName()}</h2>
+                    <h2>${MGR.getRole()}</h2>
                 </div>
                 <ul class="listr-group list-group-flush">
-                    <li class="list-group-item">ID: ${manager.getId()}</li>
-                    <li class="list-group-item">E-mail: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
-                    <li class="list-group-item">Office Number: ${manager.getOfficeNum()}</li>
+                    <li class="list-group-item">ID: ${MGR.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${MGR.getEmail()}">${MGR.getEmail()}</a></li>
+                    <li class="list-group-item">Office Number: ${MGR.getOfficeNumber()}</li>
                 </ul>
             </div>`
 }
 
-const engineerCard = (engineer) => {
+const engineerCard = (ENG) => {
     return `<div class="m-2 card">
                 <div class="card-header bg-primary text-white">
-                    <h2>${engineer.getName()}</h2>
-                    <h2>${engineer.getRole()}</h2>
+                    <h2>${ENG.getName()}</h2>
+                    <h2>${ENG.getRole()}</h2>
                 </div>
                 <ul class="listr-group list-group-flush">
-                    <li class="list-group-item">ID: ${engineer.getId()}</li>
-                    <li class="list-group-item">E-mail: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-                    <li class="list-group-item">GitHub: <a href="https://www.github.com/${engineer.getGitHub()}" target="_blank">${engineer.getGitHub()}</a></li>
+                    <li class="list-group-item">ID: ${ENG.getId()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${ENG.getEmail()}">${ENG.getEmail()}</a></li>
+                    <li class="list-group-item">GitHub: <a href="https://www.github.com/${ENG.getGitHub()}" target="_blank">${ENG.getGitHub()}</a></li>
                 </ul>
             </div>`
 }
-const internCard = (intern) => {
+
+const internCard = (INTN) => {
     return `<div class="m-2 card">
                 <div class="card-header bg-secondary text-white">
-                    <h2>${intern.getName()}</h2>
-                    <h2>${intern.getRole()}</h2>
+                    <h2>${INTN.getName()}</h2>
+                    <h2>${INTN.getRole()}</h2>
                 </div>
                 <ul class="listr-group list-group-flush">
                     <li class="list-group-item">ID: 1</li>
-                    <li class="list-group-item">E-mail: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
-                    <li class="list-group-item">School: ${intern.getSchool()}</li>
+                    <li class="list-group-item">E-mail: <a href="mailto:${INTN.getEmail()}">${INTN.getEmail()}</a></li>
+                    <li class="list-group-item">School: ${INTN.getSchool()}</li>
                 </ul>
             </div>
             </body>
             </html>`
 }
 
-let introHtml = `<!doctype html>
+
+const generateHTML = (teamJoin) => {
+    return `<!doctype html>
     <html lang="en">
     
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-            <link rel="stylesheet" href="style.css">
+            
             <title>OOP Card Deck</title>
     </head>
     
@@ -213,38 +177,79 @@ let introHtml = `<!doctype html>
     
         
             <div class="d-flex">
-               ${managerCard}
-            </div>
-            <div class="d-flex">
-               ${engineerCard}
-            </div>
-            <div class="d-flex">
-               ${internCard}
+             ${teamJoin}
             </div>
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-            crossorigin="anonymous"></script>
+        
    `
+}
+// prompt for specific question group - start with Manager default  ------ init()
 
-generateHTML += introHtml;
+// //////////////////////////////////////////////////////////////////////////////////////
+// MANAGER
+const addManager = async () => {
+    console.log('Enter your team. Lets start with the Manager.')
+     await inquirer.prompt(managerQuestions) // initialize with manager questions 
+        .then((answers) => {
+            const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            team.push(managerCard(manager));
+            console.log("inside manager");
+            console.log(manager);
+            console.log(team)
+            // team = managerCard(manager)
+        })
+    // .then(addEngineer)
+};
 
 
+// ENGINEER 
+const addEngineer = async () => {
+    console.log("Now lets enter in the Engineer's data.")
+    return await inquirer.prompt(engineerQuestions)
+        .then((answers) => {
+            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            team.push(engineerCard(engineer));
+            // console.log(employeesQA);
+            console.log("inside engineer");
+            console.log(engineer)
 
-// generates HTML based on user questions 
+        })
+    // .then(addIntern)
 
-//  welcome();
-// const joinedHTML = generateHTML.join('');
-// const HTML = generateHTML(joinedHTML);
-fs.writeFile('./dist/generateHTML.html', generateHTML, (err) => {
-    err ? console.log(err) : console.log('Successfully created a Card Deck!')
-});
+};
+
+// INTERN
+const addIntern = async () => {
+    console.log("Now lets enter in the intern's data.")
+    return await inquirer.prompt(internQuestions)
+        .then((answers) => {
+            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            team.push(internCard(intern));
+            // console.log(employeesQA); //employee array is working 
+            console.log("inside intern");
+            console.log(intern)
+            teamArr = team.join("")
+            console.log(teamArr);
+            render = teamArr;
+           finalHtml = generateHTML(render);
+           console.log(typeof finalHtml)
+        })
+    // .then(render = generateHTML(teamArr));
+};
+
+
 // return generateHTML;
-
+const createHtml = async () => {
+    // await welcome();
+    await addManager();
+    console.log("this is inside manager")
+    await addEngineer();
+    await addIntern();
+    await fs.writeFileSync('./dist/generateHTML.html', finalHtml)
+}
 
 // INITIALIZATION //////////////////////////////////////// with welcome message, then manager questions 
-const init = () => {
-    welcome()
-    .catch((err) => console.error(err));
+const init = async () => {
+   await createHtml()
 };
 init();

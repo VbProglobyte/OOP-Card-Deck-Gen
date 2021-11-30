@@ -1,0 +1,14 @@
+header {
+    color: white;
+}
+body {
+    margin: 25px;
+    line-height: 2em;
+}
+.card {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row; 
+    justify-content: space-evenly;
+    align-content: space-between;
+}
